@@ -1,0 +1,1 @@
+from .participant_registration import ParticipantRegistration
