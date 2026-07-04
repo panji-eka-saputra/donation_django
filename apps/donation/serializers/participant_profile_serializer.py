@@ -1,43 +1,62 @@
 from rest_framework import serializers
 from apps.donation.models import ParticipantRegistration
-from django.contrib.auth.models import User
+
 
 class ParticipantProfileSerializer(serializers.ModelSerializer):
+
+    first_name = serializers.CharField(source="user.first_name")
+    last_name = serializers.CharField(source="user.last_name")
+    email = serializers.EmailField(source="user.email")
+
     class Meta:
         model = ParticipantRegistration
-        fields = ["first_name",
+        fields = [
+            "first_name",
             "last_name",
             "email",
             "birthdate",
             "phone_number",
-            "address",]
-        
-        def update(self, instance, validated_data):
-            user_data = validated_data.pop("user", {})
+            "address",
+        ]
 
-            user = instance.user
+    def update(self, instance, validated_data):
 
-            user.first_name = user_data.get("first_name", user.first_name)
-            user.last_name = user_data.get("last_name", user.last_name)
-            user.email = user_data.get("email", user.email)
+        user_data = validated_data.pop("user", {})
 
-            user.save()
+        user = instance.user
 
-            instance.birthdate = validated_data.get(
-                "birthdate",
-                instance.birthdate
-            )
+        user.first_name = user_data.get(
+            "first_name",
+            user.first_name
+        )
 
-            instance.phone_number = validated_data.get(
-                "phone_number",
-                instance.phone_number
-            )
+        user.last_name = user_data.get(
+            "last_name",
+            user.last_name
+        )
 
-            instance.address = validated_data.get(
-                "address",
-                instance.address
-            )
+        user.email = user_data.get(
+            "email",
+            user.email
+        )
 
-            instance.save()
+        user.save()
 
-            return instance
+        instance.birthdate = validated_data.get(
+            "birthdate",
+            instance.birthdate
+        )
+
+        instance.phone_number = validated_data.get(
+            "phone_number",
+            instance.phone_number
+        )
+
+        instance.address = validated_data.get(
+            "address",
+            instance.address
+        )
+
+        instance.save()
+
+        return instance

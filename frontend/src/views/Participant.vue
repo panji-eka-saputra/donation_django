@@ -18,7 +18,7 @@ const profile = ref({
 async function fetchProfile() {
   try {
     const response = await getParticipantsProfile()
-    profile.value = response.data
+    profile.value = response
   } catch (error) {
     console.error('Error fetching profile:', error)
   }

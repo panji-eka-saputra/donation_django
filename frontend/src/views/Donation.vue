@@ -2,10 +2,34 @@
 import { PhotoIcon, UserCircleIcon } from '@heroicons/vue/24/solid'
 import { ChevronDownIcon } from '@heroicons/vue/16/solid'
 import Navbar from '../components/Navbar.vue'
+import { ref, onMounted } from 'vue'
+import { getDonationProfile } from '../services/Donation.ts'
+
+const profile = ref({
+  first_name: '',
+  last_name: '',
+  birthdate: '',
+  email: '',
+  phone_number: '',
+  address: '',
+})
+
+async function fetchProfile() {
+  try {
+    const response = await getDonationProfile()
+    profile.value = response
+  } catch (error) {
+    console.error('Error fetching profile:', error)
+  }
+}
+
+onMounted(() => {
+  fetchProfile()
+})
 </script>
 <template>
   <Navbar />
-  <form>
+  <form @abort="">
     <div class="border-gray-900/10 pb-12 mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
       <div class="border-b border-gray-900/10 pb-12">
         <h2 class="text-base/7 font-semibold text-gray-900 mt-4">Personal Information</h2>
@@ -18,11 +42,13 @@ import Navbar from '../components/Navbar.vue'
             >
             <div class="mt-2">
               <input
+                v-model="profile.first_name"
                 type="text"
                 name="first-name"
                 id="first-name"
                 autocomplete="given-name"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                readonly
               />
             </div>
           </div>
@@ -33,11 +59,13 @@ import Navbar from '../components/Navbar.vue'
             >
             <div class="mt-2">
               <input
+                v-model="profile.last_name"
                 type="text"
                 name="last-name"
                 id="last-name"
                 autocomplete="family-name"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                readonly
               />
             </div>
           </div>
@@ -48,6 +76,7 @@ import Navbar from '../components/Navbar.vue'
             >
             <div class="mt-2">
               <input
+                v-model="profile.birthdate"
                 type="date"
                 name="birthdate"
                 id="birthdate"
@@ -61,11 +90,13 @@ import Navbar from '../components/Navbar.vue'
             <label for="email" class="block text-sm/6 font-medium text-gray-900">Email</label>
             <div class="mt-2">
               <input
+                v-model="profile.email"
                 type="text"
                 name="email"
                 id="email"
                 autocomplete="email"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                readonly
               />
             </div>
           </div>
@@ -76,11 +107,13 @@ import Navbar from '../components/Navbar.vue'
             >
             <div class="mt-2">
               <input
+                v-model="profile.phone_number"
                 type="text"
                 name="phone_number"
                 id="phone_number"
                 autocomplete="phone_number"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                readonly
               />
             </div>
           </div>
@@ -89,11 +122,13 @@ import Navbar from '../components/Navbar.vue'
             <label for="address" class="block text-sm/6 font-medium text-gray-900">Address</label>
             <div class="mt-2">
               <input
+                v-model="profile.address"
                 type="text"
                 name="address"
                 id="address"
                 autocomplete="address"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                readonly
               />
             </div>
           </div>

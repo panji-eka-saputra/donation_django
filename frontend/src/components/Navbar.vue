@@ -1,3 +1,54 @@
+<script setup lang="ts">
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from '@headlessui/vue'
+import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
+
+const router = useRouter()
+
+const navigation = [
+  { name: 'Participant', href: '/participant', current: false },
+  { name: 'Donation', href: '/donation', current: false },
+]
+async function logout() {
+  const result = await Swal.fire({
+    title: 'Are you sure?',
+    text: 'You will be logged out.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, Logout',
+    cancelButtonText: 'Cancel',
+  })
+
+  if (result.isConfirmed) {
+    // Remove JWT tokens
+    localStorage.removeItem('access')
+    localStorage.removeItem('refresh')
+
+    // Success message
+    await Swal.fire({
+      title: 'Logged Out!',
+      text: 'You have been logged out successfully.',
+      icon: 'success',
+      timer: 1500,
+      showConfirmButton: false,
+    })
+
+    // Redirect to login page
+    router.push('/login')
+  }
+}
+</script>
 <template>
   <Disclosure as="nav" class="relative bg-gray-800" v-slot="{ open }">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -85,6 +136,7 @@
                       active ? 'bg-gray-100 outline-hidden' : '',
                       'block px-4 py-2 text-sm text-gray-700',
                     ]"
+                    @click="logout"
                     >Sign out</a
                   >
                 </MenuItem>
@@ -115,21 +167,3 @@
     </DisclosurePanel>
   </Disclosure>
 </template>
-
-<script setup>
-import {
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
-} from '@headlessui/vue'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
-
-const navigation = [
-  { name: 'Participant', href: '#', current: false },
-  { name: 'Donation', href: '#', current: false },
-]
-</script>
