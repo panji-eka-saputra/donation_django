@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from apps.donation.models import ParticipantRegistration
+from apps.donation.models import (ParticipantRegistration, Participant)
 from datetime import date
 from django.contrib.auth.models import User
 
@@ -85,6 +85,10 @@ class ParticipantRegistrationSerializer(serializers.ModelSerializer):
         email = validated_data.pop("email")
         password = validated_data.pop("password")
 
+        birthdate = validated_data.get("birthdate")
+        phone_number = validated_data.get("phone_number")
+        address = validated_data.get("address")
+
         user = User.objects.create_user(
             username=email,
             email=email,
@@ -93,9 +97,22 @@ class ParticipantRegistrationSerializer(serializers.ModelSerializer):
             last_name=last_name,
         )
 
-        participant = ParticipantRegistration.objects.create(
+        participant_registration = ParticipantRegistration.objects.create(
             user=user,
-            **validated_data
+            birthdate=birthdate,
+            phone_number=phone_number,
+            address=address,
+            is_agree_to_terms=validated_data.get("is_agree_to_terms"),
         )
 
-        return participant
+        Participant.objects.create(
+            registration=participant_registration,
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            birthdate=birthdate,
+            phone_number=phone_number,
+            address=address,
+        )
+
+        return participant_registration

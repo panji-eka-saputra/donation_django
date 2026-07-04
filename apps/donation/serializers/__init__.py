@@ -1,3 +1,4 @@
 from .participant_registration_serializer import ParticipantRegistrationSerializer
 from .participant_profile_serializer import ParticipantProfileSerializer
 from .donation_profile_serializer import DonationProfileSerializer
+from .participant_serializer import ParticipantSerializer

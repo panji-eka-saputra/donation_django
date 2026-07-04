@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class ParticipantRegistration(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="participant")
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="participant_registration")
 
     # first_name = models.CharField(max_length=30)
     # last_name = models.CharField(max_length=30)
