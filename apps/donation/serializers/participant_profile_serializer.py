@@ -13,4 +13,6 @@ class ParticipantProfileSerializer(serializers.ModelSerializer):
             "birthdate",
             "phone_number",
             "address",
+            "total_donation",
+            "total_transactions",
         ]

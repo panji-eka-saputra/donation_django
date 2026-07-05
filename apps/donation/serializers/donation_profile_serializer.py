@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from apps.donation.models import ParticipantRegistration
+from apps.donation.models import Participant
 
 class DonationProfileSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source="user.first_name")
@@ -7,7 +7,7 @@ class DonationProfileSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(source="user.email")
 
     class Meta:
-        model = ParticipantRegistration
+        model = Participant
         fields = [
             "first_name",
             "last_name",
@@ -15,4 +15,6 @@ class DonationProfileSerializer(serializers.ModelSerializer):
             "birthdate",
             "phone_number",
             "address",
+            "total_donation",
+            "total_transactions",
         ]

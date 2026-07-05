@@ -3,7 +3,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 
-from apps.donation.serializers import DonationProfileSerializer
+from apps.donation.models import ParticipantRegistration
+from apps.donation.serializers import ParticipantProfileSerializer
 
 
 class DonationProfileView(APIView):
@@ -11,8 +12,13 @@ class DonationProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        participant = request.user.participant
 
-        serializer = DonationProfileSerializer(participant)
+        registration = ParticipantRegistration.objects.get(
+            user=request.user
+        )
+
+        participant = registration.participant
+
+        serializer = ParticipantProfileSerializer(participant)
 
         return Response(serializer.data)
