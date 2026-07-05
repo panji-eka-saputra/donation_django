@@ -9,3 +9,13 @@ export const getDonationProfile = async () => {
     throw error
   }
 }
+
+export const createDonation = async (payload: any) => {
+  try {
+    const { data } = await api.post('/api/donation/create/', payload)
+    return data
+  } catch (error) {
+    console.error('Error creating donation:', error)
+    throw error
+  }
+}

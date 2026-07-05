@@ -6,7 +6,7 @@ from rest_framework_simplejwt.views import (
 
 from apps.donation.views import (
     ParticipantRegistrationViewSet,
-    ParticipantProfileView, DonationProfileView
+    ParticipantProfileView, DonationProfileView, DonationView
 )
 
 from apps.donation.views.stripe_webhook import stripe_webhook
@@ -51,6 +51,10 @@ urlpatterns = [
         "donation/me/",
         DonationProfileView.as_view(),
         name="donation-profile",
+    ),
+    path(
+        "donation/create/",
+        DonationView.as_view(),
     ),
 
     # Authentication
