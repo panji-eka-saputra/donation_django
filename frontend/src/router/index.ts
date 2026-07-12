@@ -4,6 +4,7 @@ import Registration from '../views/Registration.vue'
 import Login from '../views/Login.vue'
 import Donation from '../views/Donation.vue'
 import Participant from '../views/Participant.vue'
+import PaymentSuccess from '../views/PaymentSuccess.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +35,11 @@ const router = createRouter({
       name: 'participant',
       component: Participant,
       meta: { requiresAuth: true },
+    },
+    {
+      path: '/payment-success',
+      name: 'payment-success',
+      component: PaymentSuccess,
     },
   ],
 })

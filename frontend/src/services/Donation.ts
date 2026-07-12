@@ -19,3 +19,9 @@ export const createDonation = async (payload: any) => {
     throw error
   }
 }
+
+export const getDonationSuccess = async (sessionId: string) => {
+  const { data } = await api.get(`/api/donation/success/?session_id=${sessionId}`)
+
+  return data
+}

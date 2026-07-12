@@ -50,7 +50,7 @@ async function submitDonation() {
 
     console.log(response)
 
-    alert('Donation created successfully.')
+    // alert('Donation created successfully.')
 
     // Jika Stripe mengembalikan checkout_url
     // window.location.href = response.checkout_url

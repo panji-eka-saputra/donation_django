@@ -4,3 +4,4 @@ from .stripe_webhook import stripe_webhook
 from .donation_profile_view import DonationProfileView
 from .participant_view import ParticipantView
 from .donation_view import DonationView
+from .payment_success_view import PaymentSuccessView

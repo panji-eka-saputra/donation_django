@@ -6,7 +6,7 @@ from rest_framework_simplejwt.views import (
 
 from apps.donation.views import (
     ParticipantRegistrationViewSet,
-    ParticipantProfileView, DonationProfileView, DonationView
+    ParticipantProfileView, DonationProfileView, DonationView, PaymentSuccessView
 )
 
 from apps.donation.views.stripe_webhook import stripe_webhook
@@ -18,6 +18,12 @@ urlpatterns = [
         "webhook/",
         stripe_webhook,
         name="stripe-webhook"
+    ),
+
+    path(
+    "donation/success/",
+    PaymentSuccessView.as_view(),
+    name="donation-success",
     ),
 
     # Registration
